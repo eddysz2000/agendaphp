@@ -3,24 +3,34 @@
 
   class ConectorBD
   {
-    private $host;
-    private $user;
-    private $password;
+    private $host = 'localhost';
+    private $user = 'root';
+    private $password = '';
     private $conexion;
+    private $nombre_db='agenda';
 
-    function __construct($host, $user, $password){
-      $this->host = $host;
-      $this->user = $user;
-      $this->password = $password;
-    }
-
-    function initConexion($nombre_db){
-      $this->conexion = new mysqli($this->host, $this->user, $this->password, $nombre_db);
+    function initConexion(){
+      $this->conexion = new mysqli($this->host, $this->user, $this->password,$this->nombre_db);
       if ($this->conexion->connect_error) {
         return "Error:" . $this->conexion->connect_error;
       }else {
         return "OK";
       }
+    }
+
+    function datosUsuario($email){
+      $sql="SELECT * FROM usuarios WHERE correo='".$email."'";
+      return $this->ejecutarQuery($sql);
+    }
+
+    function obtenerEventos($id){
+      $sql="SELECT id,title,start,end FROM eventos WHERE usuario_id='".$id."'";
+      return $this->ejecutarQuery($sql);
+    }
+
+    function eliminarEvento($evento,$usuario){
+      $sql="DELETE FROM eventos WHERE id='".$evento."' AND usuario_id='".$usuario."'";
+      return $this->ejecutarQuery($sql);
     }
 
     function newTable($nombre_tbl, $campos){
@@ -76,6 +86,7 @@
         }else $sql .= ');';
         $i++;
       }
+
       return $this->ejecutarQuery($sql);
 
     }
@@ -96,51 +107,6 @@
       }
       return $this->ejecutarQuery($sql);
     }
-
-    function eliminarRegistro($tabla, $condicion){
-      $sql = "DELETE FROM ".$tabla." WHERE ".$condicion.";";
-      return $this->ejecutarQuery($sql);
-    }
-
-    function consultar($tablas, $campos, $condicion = ""){
-      $sql = "SELECT ";
-      $tmp_campos = array_keys($campos);
-      $tmp_tablas = array_keys($tablas);
-
-      $ultima_key = end($tmp_campos);
-      foreach ($campos as $key => $value) {
-        $sql .= $value;
-        if ($key!=$ultima_key) {
-          $sql.=", ";
-        }else $sql .=" FROM ";
-      }
-
-      $ultima_key = end($tmp_tablas);
-      foreach ($tablas as $key => $value) {
-        $sql .= $value;
-        if ($key!=$ultima_key) {
-          $sql.=", ";
-        }else $sql .= " ";
-      }
-
-      if ($condicion == "") {
-        $sql .= ";";
-      }else {
-        $sql .= $condicion.";";
-      }
-      return $this->ejecutarQuery($sql);
-    }
-
-    function getViajesUser($user_id){
-      $sql = "SELECT co.nombre AS ciudad_origen, cd.nombre AS ciudad_destino, v.placa AS placa, v.fabricante AS fabricante, v.referencia AS referencia, a.fecha_salida AS fecha_salida, a.fecha_llegada AS fecha_llegada, a.hora_salida AS hora_salida, a.hora_llegada AS hora_llegada
-              FROM viajes AS a
-              JOIN ciudades AS co ON co.id = a.fk_ciudad_origen
-              JOIN ciudades AS cd ON cd.id = a.fk_ciudad_destino
-              JOIN vehiculos AS v ON v.placa = a.fk_vehiculo
-              WHERE a.fk_conductor = ".$user_id.";";
-      return $this->ejecutarQuery($sql);
-    }
-
 
 
   }

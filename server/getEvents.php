@@ -19,8 +19,8 @@ $con = new ConectorBD('localhost','root','');
     }else $response=array("msg"=>"NO existe el Usuario","data"=>"2"); 
   }  
 
-  print_r($response);
-  //echo json_encode($response,JSON_FORCE_OBJECT);
+  //print_r($response);
+  echo json_encode($response,JSON_FORCE_OBJECT);
 
   $con->cerrarConexion();
 

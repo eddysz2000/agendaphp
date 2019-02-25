@@ -41,6 +41,7 @@
 
     function ejecutarQuery($query){
       return $this->conexion->query($query);
+      //console_log($this->conexion->query($query));
     }
 
     function cerrarConexion(){

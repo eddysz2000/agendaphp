@@ -23,7 +23,7 @@ class EventsManager {
             }
           },
           error: function(){
-            alert("error en la comunicación con el servidor");
+            alert("error en la comunicación con el servidor 3");
           }
         })
 
@@ -36,7 +36,7 @@ class EventsManager {
         		center: 'title',
         		right: 'month,agendaWeek,basicDay'
         	},
-        	defaultDate: '2016-11-01',
+        	defaultDate: '2019-02-25',
         	navLinks: true,
         	editable: true,
         	eventLimit: true,
@@ -116,7 +116,7 @@ class EventsManager {
           }
         },
         error: function(){
-          alert("error en la comunicación con el servidor");
+          alert("error en la comunicación con el servidor 4");
         }
       })
 
@@ -142,7 +142,7 @@ class EventsManager {
           }
         },
         error: function(){
-          alert("error en la comunicación con el servidor");
+          alert("error en la comunicación con el servidor 5");
         }
       })
       $('.delete-btn').find('img').attr('src', "img/trash.png");
@@ -187,7 +187,7 @@ class EventsManager {
             }
           },
           error: function(){
-            alert("error en la comunicación con el servidor");
+            alert("error en la comunicación con el servidor 6");
           }
         })
     }

@@ -32,7 +32,7 @@ class EventsManager {
         		center: 'title',
         		right: 'month,agendaWeek,basicDay'
         	},
-        	defaultDate: '2017-04-15',
+        	defaultDate: '2019-02-27',
         	navLinks: true,
         	editable: true,
         	eventLimit: true,
@@ -67,7 +67,8 @@ class EventsManager {
     	var form_data = new FormData();
     	form_data.append('titulo', $('#titulo').val());
     	form_data.append('start_date', $('#start_date').val());
-    	form_data.append('allDay', document.getElementById('allDay').checked);
+    	//form_data.append('allDay', document.getElementById('allDay').checked);
+      form_data.append('allDay', $('#allDay').val());
     	if (!document.getElementById('allDay').checked) {
         	form_data.append('end_date', $('#end_date').val());
         	form_data.append('end_hour', $('#end_hour').val());
@@ -87,7 +88,7 @@ class EventsManager {
         	type: 'POST',
         	success: (data) =>{
           		if (data.msg=="OK") {
-            		alert('Se ha añadido el evento exitosamente')
+            		alert('Se ha añadido el evento exitosamente'+', valor del dia :'+document.getElementById('allDay').checked)
             		if (document.getElementById('allDay').checked) {
               			$('.calendario').fullCalendar('renderEvent', {
                 			title: $('#titulo').val(),

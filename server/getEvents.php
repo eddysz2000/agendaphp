@@ -3,7 +3,7 @@ session_start();
 if($_SESSION['isLogin']){
 	require ('conectarBD.php');
 	
-	$con = new ConectorBD('localhost', 'nextu', '12345');
+	$con = new ConectorBD('localhost', 'root', '');
 	$response['conexion'] = $con -> initConexion('agenda');
 
 	if ($response['conexion'] == 'OK') {
@@ -13,9 +13,11 @@ if($_SESSION['isLogin']){
 			$i=0;
 			while ($fila = $resultado->fetch_assoc()) {
 				$evento['id'] = $fila['id'];
+				//print_r($evento['id']);
 				$evento['title'] = $fila['titulo'];
 				if($fila['dia_completo'] == 1){
 					$evento['start'] = $fila['fecha_inicio'];
+					$evento['end'] = '';
 					$evento['allDay'] = true;
 				} else {
 					$evento['start'] = $fila['fecha_inicio'].'T'.$fila['hora_ini'];

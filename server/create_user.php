@@ -9,7 +9,7 @@ $email= "sa.ortega19@gmail.com";
 $pass= password_hash("12345", PASSWORD_DEFAULT); //encriptar la contraseña
 $fechaN="1991-10-22";
 
-$con= new ConectorBD('localhost', 'nextu', '12345');
+$con= new ConectorBD('localhost', 'root', '');
 
 if ($con->initConexion('agenda')=="OK") {
 	$res= $con->validar($cod);

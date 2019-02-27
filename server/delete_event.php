@@ -4,7 +4,7 @@ session_start();
 if ($_SESSION['isLogin']) {
 	require ('conectarBD.php');
 
-	$con = new ConectorBD('localhost', 'nextu', '12345');
+	$con = new ConectorBD('localhost', 'root', '');
 	$response['conexion'] = $con -> initConexion('agenda');
 	if ($response['conexion'] == 'OK') {
 		if ($con -> eliminarRegistro('evento', 'id = ' . $_POST['id']))

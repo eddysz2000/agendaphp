@@ -3,10 +3,10 @@ session_start();
 
 require ('conectarBD.php');
 
-//$pass=$_POST['password'];
-$pass = '123';
-//$email= $_POST['username'];
-$email = 'pablito@gmail.com';
+$pass=$_POST['password'];
+//$pass = '123';
+$email= $_POST['username'];
+//$email = 'pablito@gmail.com';
 $response['conexion'] = 'Sin conexión';
 
 if (filter_var($email, FILTER_VALIDATE_EMAIL) && !empty($pass)) {

@@ -1,23 +1,35 @@
 <?php
 session_start();
-require('../server/conector.php');
-$con = new ConectorBD('localhost','root','');
 
-  $response['conexion'] = $con->initConexion('agenda');
+require ('conectarBD.php');
 
-  if ($response['conexion']=='OK') {
-    $resultado_consulta = $con->consultar(['usuarios'],
-    ['correo', 'password'], 'WHERE correo="'.$_POST['username'].'" AND password="'.$_POST['password'].'"');
+$pass=$_POST['password'];
+$email= $_POST['username'];
+$response['conexion'] = 'Sin conexión';
 
-    if ($resultado_consulta->num_rows != 0) {
-      $response=array("msg"=>"OK","data"=>"2");  
-    }else $response=array("msg"=>"NO existe el Usuario","data"=>"2"); 
-  }
+if (filter_var($email, FILTER_VALIDATE_EMAIL) && !empty($pass)) {
+	$con = new ConectorBD('localhost', 'nextu', '12345');
+	$response['conexion'] = $con -> initConexion('agenda');
+	if ($response['conexion'] == 'OK') {
+		$resultado = $con -> consultar(['usuario'], ['*'], 'email="' . $email . '"');
+		if ($resultado ->num_rows != 0) {
+			while ($fila = $resultado -> fetch_assoc()) {
+				$hashpass = $fila['contrasenna'];
+				$userResult = $fila;
+			}
+			if (password_verify($pass, $hashpass)) {
+				$_SESSION['isLogin'] = true;
+				$_SESSION['userLogin'] = $userResult;
+				$response['msg'] = 'OK';
+			} else
+				$response['msg'] = 'Contraseña incorrecta';
+		} else
+			$response['msg'] = 'El usuario no existe ';
+	} else
+		$response['msg'] = 'Problemas con la conexión a la base de datos';
+	$con -> cerrarConexion();
+} else
+	$response['msg'] = 'Datos incorrectos';
 
-  echo json_encode($response,JSON_FORCE_OBJECT);
-
-  $con->cerrarConexion();
-
-
-
- ?>
+echo json_encode($response);
+?>

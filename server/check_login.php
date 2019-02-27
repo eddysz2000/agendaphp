@@ -3,12 +3,14 @@ session_start();
 
 require ('conectarBD.php');
 
-$pass=$_POST['password'];
-$email= $_POST['username'];
+//$pass=$_POST['password'];
+$pass = '123';
+//$email= $_POST['username'];
+$email = 'pablito@gmail.com';
 $response['conexion'] = 'Sin conexión';
 
 if (filter_var($email, FILTER_VALIDATE_EMAIL) && !empty($pass)) {
-	$con = new ConectorBD('localhost', 'nextu', '12345');
+	$con = new ConectorBD('localhost', 'root', '');
 	$response['conexion'] = $con -> initConexion('agenda');
 	if ($response['conexion'] == 'OK') {
 		$resultado = $con -> consultar(['usuario'], ['*'], 'email="' . $email . '"');

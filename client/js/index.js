@@ -32,7 +32,7 @@ class Login {
         else alert(php_response.msg);
       },
       error: function(){
-        alert("error en la comunicación con el servidor");
+        alert("error en la comunicación con el servidor 5");
       }
     });
   }

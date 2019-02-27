@@ -93,7 +93,9 @@
 
 	function consultar($tablas, $campos, $condicion = "") {
 		$sql = "SELECT ";
-		$ultima_key = end(array_keys($campos));
+		$tmp_campos = array_keys($campos);
+		$tmp_tablas = array_keys($tablas);
+		$ultima_key = end($tmp_campos);
 		foreach ($campos as $key => $value) {
 			$sql .= $value;
 			if ($key != $ultima_key) {
@@ -101,7 +103,7 @@
 			} else
 				$sql .= " FROM ";
 		}
-		$ultima_key = end(array_keys($tablas));
+		$ultima_key = end($tmp_tablas);
 		foreach ($tablas as $key => $value) {
 			$sql .= $value;
 			if ($key != $ultima_key) {

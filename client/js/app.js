@@ -76,7 +76,6 @@ class EventsManager {
       }
       alert(todo_el_dia);
       form_data.append('allDay', todo_el_dia);
-      //form_data.append('allDay', $('#allDay').val());
     	if (!document.getElementById('allDay').checked) {
         	form_data.append('end_date', $('#end_date').val());
         	form_data.append('end_hour', $('#end_hour').val());
@@ -95,9 +94,8 @@ class EventsManager {
         	data: form_data,
         	type: 'POST',
         	success: (data) =>{
-              alert('valor del dia: '+data.dia);
-          		if (data.msg=="OK") {
-            		alert('Se ha añadido el evento exitosamente'+', valor del dia :'+document.getElementById('allDay').checked)
+              if (data.msg=="OK") {
+            		alert('Se ha añadido el evento exitosamente')
             		if (document.getElementById('allDay').checked) {
               			$('.calendario').fullCalendar('renderEvent', {
                 			title: $('#titulo').val(),

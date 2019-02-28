@@ -6,6 +6,8 @@ if ($_SESSION['isLogin']) {
 
 	$con = new ConectorBD('localhost', 'root', '');
 	$response['conexion'] = $con -> initConexion('agenda');
+
+	//validacion si la conexion es conforme se procede a identificar y eliminar el registro indicado
 	if ($response['conexion'] == 'OK') {
 		if ($con -> eliminarRegistro('evento', 'id = ' . $_POST['id']))
 			$response['msg'] = 'OK';

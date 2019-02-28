@@ -12,6 +12,7 @@ if (isset($_SESSION['isLogin'])) {
 	$con= new ConectorBD('localhost', 'root', '');
 	$response['conexion']= $con->initConexion('agenda');
 
+	//validacion de conexion para proceder identificar los nuevos datos del evento
 	if ($response['conexion']=="OK") {
 
 		if(validateDate($_POST['start_date'], 'Y-m-d'))
@@ -23,6 +24,7 @@ if (isset($_SESSION['isLogin'])) {
 		if(validateDate($_POST['end_hour'], 'H:i:s'))
 			$datos['hora_fin'] = $_POST['end_hour'];
 
+		//luego de identificados los nuevos datos se proceder a actualizar la informacion en la BD
 		if ($con->actualizarRegistro('evento', $datos, 'id= '.$_POST['id'])) {
 			$response['msg'] = 'OK';
 		}else

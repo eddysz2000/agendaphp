@@ -4,14 +4,14 @@ session_start();
 require ('conectarBD.php');
 
 $pass=$_POST['password'];
-//$pass = '123';
 $email= $_POST['username'];
-//$email = 'pablito@gmail.com';
 $response['conexion'] = 'Sin conexión';
 
 if (filter_var($email, FILTER_VALIDATE_EMAIL) && !empty($pass)) {
 	$con = new ConectorBD('localhost', 'root', '');
 	$response['conexion'] = $con -> initConexion('agenda');
+
+	//validacion si la conexion es conforme se procede a obtener los datos de acceso para comparar
 	if ($response['conexion'] == 'OK') {
 		$resultado = $con -> consultar(['usuario'], ['*'], 'email="' . $email . '"');
 		if ($resultado ->num_rows != 0) {
@@ -19,6 +19,8 @@ if (filter_var($email, FILTER_VALIDATE_EMAIL) && !empty($pass)) {
 				$hashpass = $fila['contrasenna'];
 				$userResult = $fila;
 			}
+
+			//comparacion de la clave ingresada con la registrada en la BD
 			if (password_verify($pass, $hashpass)) {
 				$_SESSION['isLogin'] = true;
 				$_SESSION['userLogin'] = $userResult;

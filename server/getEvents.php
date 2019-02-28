@@ -6,14 +6,18 @@ if($_SESSION['isLogin']){
 	$con = new ConectorBD('localhost', 'root', '');
 	$response['conexion'] = $con -> initConexion('agenda');
 
+
+	//validacion si la conexion es conforme
 	if ($response['conexion'] == 'OK') {
+
+		//obtener los eventos del usuario que ha ingresado
 		$resultado = $con -> consultar(['evento'], ['*'], 'usuario="' . $_SESSION['userLogin']['id'] . '"');
 
+		//si se obtiene resultado se procede a llenar los datos de los eventos encontrados
 		if ($resultado->num_rows != 0) {
 			$i=0;
 			while ($fila = $resultado->fetch_assoc()) {
 				$evento['id'] = $fila['id'];
-				//print_r($evento['id']);
 				$evento['title'] = $fila['titulo'];
 				if($fila['dia_completo'] == 1){
 					$evento['start'] = $fila['fecha_inicio'];

@@ -6,16 +6,14 @@ if (isset($_SESSION['isLogin'])) {
 	$con= new ConectorBD('localhost', 'root', '');
 	$response['conexion']= $con->initConexion('agenda');
 
-	//alert($_POST['allDay']);
-
+	//validacion si la conexion es conforme para proceder a preparar los datos a grabar
 	if ($response['conexion']=="OK") {
 		$datos['titulo'] = $_POST['titulo'];
 		$datos['fecha_inicio'] = $_POST['start_date'];
+
+		//dependiendo si el evento dura todo el dia o no, se preparan los datos
 		if($_POST['allDay']=='1')
 			$datos['dia_completo'] = 1;
-			//$datos['hora_ini'] = '';
-			//$datos['fecha_fin'] = '';
-			//$datos['hora_fin'] = '';
 		else {
 			$datos['dia_completo'] = 0;
 			$datos['hora_ini'] = $_POST['start_hour'];
@@ -23,11 +21,11 @@ if (isset($_SESSION['isLogin'])) {
 			$datos['hora_fin'] = $_POST['end_hour'];
 
 		}
-		$response['dia']=$datos['dia_completo'];
+		
+		//identificacion de pertenencia del evento ingresado
 		$datos['usuario'] = $_SESSION['userLogin']['id'];
 
-		//print_r($_POST['allDay']);
-
+		//validacion si el registro es conforme
 		if ($con->insertData('evento',$datos)) {
 			$response['msg'] = 'OK';
 		}else

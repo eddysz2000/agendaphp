@@ -11,7 +11,7 @@ if (isset($_SESSION['isLogin'])) {
 	if ($response['conexion']=="OK") {
 		$datos['titulo'] = $_POST['titulo'];
 		$datos['fecha_inicio'] = $_POST['start_date'];
-		if($_POST['allDay']=='true')
+		if($_POST['allDay']=='1')
 			$datos['dia_completo'] = 1;
 			//$datos['hora_ini'] = '';
 			//$datos['fecha_fin'] = '';
@@ -21,7 +21,9 @@ if (isset($_SESSION['isLogin'])) {
 			$datos['hora_ini'] = $_POST['start_hour'];
 			$datos['fecha_fin'] = $_POST['end_date'];
 			$datos['hora_fin'] = $_POST['end_hour'];
+
 		}
+		$response['dia']=$datos['dia_completo'];
 		$datos['usuario'] = $_SESSION['userLogin']['id'];
 
 		//print_r($_POST['allDay']);

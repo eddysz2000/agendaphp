@@ -13,11 +13,12 @@ class EventsManager {
           	contentType: false,
           	type: 'GET',
           	success: (data) =>{
-            	if (data.msg=="OK") this.poblarCalendario(data.eventos);
-				else {
+            	if (data.msg=="OK"){
+                this.poblarCalendario(data.eventos);
+              }else {
               		alert(data.msg);
               		window.location.href = 'index.html';
-            	}
+              }
           	},
           	error: function(){
           		alert("error en la comunicación con el servidor 1");
@@ -65,10 +66,17 @@ class EventsManager {
 
 	anadirEvento(){
     	var form_data = new FormData();
+      var todo_el_dia = 0;
     	form_data.append('titulo', $('#titulo').val());
     	form_data.append('start_date', $('#start_date').val());
-    	//form_data.append('allDay', document.getElementById('allDay').checked);
-      form_data.append('allDay', $('#allDay').val());
+    	if(document.getElementById('allDay').checked){
+        todo_el_dia = 1;
+      }else{
+        todo_el_dia = 0;
+      }
+      alert(todo_el_dia);
+      form_data.append('allDay', todo_el_dia);
+      //form_data.append('allDay', $('#allDay').val());
     	if (!document.getElementById('allDay').checked) {
         	form_data.append('end_date', $('#end_date').val());
         	form_data.append('end_hour', $('#end_hour').val());
@@ -87,6 +95,7 @@ class EventsManager {
         	data: form_data,
         	type: 'POST',
         	success: (data) =>{
+              alert('valor del dia: '+data.dia);
           		if (data.msg=="OK") {
             		alert('Se ha añadido el evento exitosamente'+', valor del dia :'+document.getElementById('allDay').checked)
             		if (document.getElementById('allDay').checked) {

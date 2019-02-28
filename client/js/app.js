@@ -74,7 +74,6 @@ class EventsManager {
       }else{
         todo_el_dia = 0;
       }
-      alert(todo_el_dia);
       form_data.append('allDay', todo_el_dia);
     	if (!document.getElementById('allDay').checked) {
         	form_data.append('end_date', $('#end_date').val());

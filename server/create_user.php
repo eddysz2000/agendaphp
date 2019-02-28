@@ -3,16 +3,18 @@
 require ('conectarBD.php');
 
 //datos del usuario
-$cod='1094267608';
-$nombre= "Stefania Afanador";
-$email= "sa.ortega19@gmail.com";
+$cod='6';
+$nombre= "Eddy Sanchez";
+$email= "eddy@gmail.com";
 $pass= password_hash("12345", PASSWORD_DEFAULT); //encriptar la contraseña
-$fechaN="1991-10-22";
+$fechaN="1989-01-30";
 
 $con= new ConectorBD('localhost', 'root', '');
 
 if ($con->initConexion('agenda')=="OK") {
-	$res= $con->validar($cod);
+
+	//validacion si el correo existe
+	$res= $con->validar($email);
 
 	if ($res->num_rows==true) {
 		echo "<h2>El correo ya se encuentra registrado</h2>";

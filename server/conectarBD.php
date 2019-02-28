@@ -38,8 +38,8 @@
 		$this -> conexion -> close();
 	}
 
-	function validar($id){
-		$sql= "select id from usuario where id='".$id."';";
+	function validar($email){
+		$sql= "select email from usuario where email='".$email."';";
 		return $this->ejecutarQuery($sql);
 	}
 
